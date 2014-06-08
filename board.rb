@@ -1,16 +1,21 @@
 require 'set'
 require_relative 'line'
 require_relative 'cell'
+require_relative 'utils'
 
 class Board
   def initialize(*initial_state)
     @cells_per_line = cells_per_line(initial_state)
     @lines = SortedSet.new
+    @lines_with_cells = []
   end
 
-  def to_s
+  def paint
     sort_lines!
-    @lines.map(&:to_s).join
+
+    Utils.position_search @lines_with_cells,
+      found: -> { @lines.to_a.shift.to_s },
+      not_found: -> { "\n" }
   end
 
   private
@@ -18,6 +23,7 @@ class Board
 
   def sort_lines!
     @cells_per_line.each do |line_pos, cells|
+      @lines_with_cells << line_pos
       @lines << Line.new(cells)
     end
   end

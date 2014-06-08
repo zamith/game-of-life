@@ -9,15 +9,11 @@ class Line
   end
 
   def to_s
-    line = []
-    1.upto(live_cells_position.last) do |index|
-      line << if live_cells_position.include?(index)
-        "*"
-      else
-        " "
-      end
-    end
-    "#{line.join}\n"
+    line = Utils.position_search live_cells_position,
+      found: -> { "*" },
+      not_found: -> { " " }
+
+    "#{line}\n"
   end
 
   def <=>(other)

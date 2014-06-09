@@ -1,4 +1,4 @@
 require_relative 'board'
 
-board = Board.new [10,1], [5,2]
-print board.to_s
+board = Board.new Cell.new(x: 10, y: 1), Cell.new(x: 2, y: 2)
+print board.paint
